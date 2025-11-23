@@ -1,0 +1,41 @@
+========== Model Limitations and Considerations ==========
+
+1. MODEL SIMPLICITY
+   - Logistic regression assumes linear relationships between features
+   - Cannot capture complex, non-linear patterns in build failures
+   - May underperform on intricate failure scenarios
+
+2. FEATURE LIMITATIONS
+   - Only uses quantitative metrics (durations, resource usage)
+   - Missing qualitative factors: code changes, developer experience,
+     time of day, day of week
+   - No git metadata or code complexity metrics included
+
+3. TEMPORAL ASPECTS
+   - Model does not account for seasonal patterns or trends over time
+   - No concept of recent deployment history or change frequency
+   - Rolling windows help but are limited to short-term patterns
+
+4. CLASS IMBALANCE HANDLING
+   - Dataset has moderate imbalance (60% success, 40% failure)
+   - Current model treats both classes equally
+   - In production, you might want to adjust for cost of false negatives
+
+5. PRODUCTION CONSIDERATIONS
+   - Model needs retraining as pipeline characteristics change
+   - Performance may degrade over time (model drift)
+   - Should be combined with rule-based alerting, not used alone
+   - False negatives (missed failures) are particularly costly
+
+6. RECOMMENDED IMPROVEMENTS
+   - Collect more diverse features (code metrics, historical patterns)
+   - Experiment with more sophisticated algorithms (Random Forest, XGBoost)
+   - Implement ensemble methods to combine multiple models
+   - Add confidence scoring to predictions
+   - Set up model monitoring and automated retraining pipelines
+
+7. WHEN TO USE THIS MODEL
+   - As a complement to existing monitoring, not a replacement
+   - For prioritizing manual reviews of suspicious builds
+   - To provide early warnings before build completion
+   - As a baseline for more sophisticated solutions
